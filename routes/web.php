@@ -14,9 +14,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/register', [AuthController::class, 'registerForm'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.dashboard');
     });
+    // CRUD Komik
+    Route::resource('/admin/comics', \App\Http\Controllers\ComicController::class);
+
+    // CRUD Genre
+    Route::resource('/admin/genres', \App\Http\Controllers\GenreController::class);
 });
 
