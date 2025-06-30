@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Comic Tracker</title>
+    <title>List Komik - Comic Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar-brand { color: #0d6efd !important; }
@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/comics">List Komik</a>
+                        <a class="nav-link active" href="/comics">List Komik</a>
                     </li>
                     @auth
                     <li class="nav-item">
@@ -29,7 +29,7 @@
                     </li>
                     @else
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">Register</a>
@@ -39,34 +39,33 @@
             </div>
         </div>
     </nav>
-    <div class="container d-flex align-items-center justify-content-center flex-grow-1">
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h2 class="mb-4 text-center text-primary fw-bold">Login</h2>
-                    @if ($errors->any())
-                        <div class="alert alert-danger py-2 mb-3">
-                            {{ $errors->first() }}
+    <div class="container pb-5 flex-grow-1">
+        <h2 class="mb-4 text-center fw-semibold text-primary">List Komik</h2>
+        <div class="row g-4">
+            @forelse($comics as $comic)
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm border-0">
+                        @if($comic->cover_image)
+                            <img src="{{ asset('storage/'.$comic->cover_image) }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 260px;">
+                                <span class="text-secondary display-3">📚</span>
+                            </div>
+                        @endif
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-truncate" title="{{ $comic->title }}">{{ $comic->title }}</h5>
+                            <div class="mb-2">
+                                @foreach($comic->genres as $genre)
+                                    <span class="badge bg-primary me-1">{{ $genre->name }}</span>
+                                @endforeach
+                            </div>
+                            <p class="card-text text-muted small mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ $comic->description }}</p>
                         </div>
-                    @endif
-                    <form method="POST" action="/login">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required autofocus>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-                    <div class="mt-3 text-center">
-                        <span class="text-muted">Belum punya akun?</span>
-                        <a href="{{ route('register') }}" class="text-primary">Register</a>
                     </div>
                 </div>
-            </div>
+            @empty
+                <div class="col-12 text-center text-muted">Belum ada komik.</div>
+            @endforelse
         </div>
     </div>
     <!-- Footer -->
@@ -75,6 +74,6 @@
             <small>&copy; {{ date('Y') }} Comic Tracker. All rights reserved.</small>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
-
+</html> 
