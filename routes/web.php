@@ -16,19 +16,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/register', [AuthController::class, 'registerForm'])->middleware('guest')->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/comics', function () {
-    $comics = \App\Models\Comic::with('genres')->get();
-    return view('comics.index', compact('comics'));
-});
+Route::get('/comics', [\App\Http\Controllers\ComicController::class, 'publicIndex'])->name('comics.index');
+Route::get('/komik/{comic}', [\App\Http\Controllers\ComicController::class, 'show'])->name('comics.show');
 
-Route::middleware(['auth', 'is_admin'])->group(function () {
-    Route::get('/admin', function () {
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
     });
     // CRUD Komik
-    Route::resource('/admin/comics', \App\Http\Controllers\ComicController::class);
+    Route::resource('comics', \App\Http\Controllers\ComicController::class);
 
     // CRUD Genre
-    Route::resource('/admin/genres', \App\Http\Controllers\GenreController::class);
+    Route::resource('genres', \App\Http\Controllers\GenreController::class);
 });
 

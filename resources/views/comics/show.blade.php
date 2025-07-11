@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Komik - Comic Tracker</title>
+    <title>{{ $comic->title }} - Detail Komik | Comic Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar-brand { color: #0d6efd !important; }
         .footer { background: #f1f3f6; color: #6c757d; }
+        .cover-img { object-fit: cover; width: 100%; min-height: 320px; max-height: 420px; border-radius: 1rem; }
+        .genre-badge { font-size: 0.95em; }
     </style>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
@@ -21,7 +23,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/comics">List Komik</a>
+                        <a class="nav-link" href="/comics">List Komik</a>
                     </li>
                     @auth
                     <li class="nav-item d-flex align-items-center">
@@ -51,33 +53,35 @@
         </div>
     </nav>
     <div class="container pb-5 flex-grow-1">
-        <h2 class="mb-4 text-center fw-semibold text-primary">List Komik</h2>
-        <div class="row g-4">
-            @forelse($comics as $comic)
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="card h-100 shadow-sm border-0">
-                        @if($comic->cover_image)
-                            <img src="{{ asset('storage/'.$comic->cover_image) }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
-                        @else
-                            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 260px;">
-                                <span class="text-secondary display-3">📚</span>
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card shadow-sm border-0 mb-4 p-3 p-md-4">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5 text-center">
+                            @if($comic->cover_image)
+                                <img src="{{ asset('storage/'.$comic->cover_image) }}" class="cover-img mb-3 mb-md-0" alt="{{ $comic->title }}">
+                            @else
+                                <div class="d-flex align-items-center justify-content-center bg-light cover-img mb-3 mb-md-0" style="height: 320px;">
+                                    <span class="text-secondary display-3">📚</span>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-7">
+                            <h2 class="fw-bold mb-2">{{ $comic->title }}</h2>
+                            <div class="mb-3">
+                                @forelse($comic->genres as $genre)
+                                    <span class="badge bg-primary genre-badge me-1 mb-1">{{ $genre->name }}</span>
+                                @empty
+                                    <span class="text-muted small">Tidak ada genre</span>
+                                @endforelse
                             </div>
-                        @endif
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title text-truncate" title="{{ $comic->title }}">{{ $comic->title }}</h5>
-                            <div class="mb-2">
-                                @foreach($comic->genres as $genre)
-                                    <span class="badge bg-primary me-1">{{ $genre->name }}</span>
-                                @endforeach
-                            </div>
-                            <p class="card-text text-muted small mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ $comic->description }}</p>
+                            <h6 class="text-secondary mb-2">Deskripsi</h6>
+                            <p class="card-text text-muted mb-3" style="white-space: pre-line;">{{ $comic->description ?? '-' }}</p>
                             <a href="{{ route('comics.show', $comic->id) }}" class="btn btn-outline-primary btn-sm mt-auto">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
-            @empty
-                <div class="col-12 text-center text-muted">Belum ada komik.</div>
-            @endforelse
+            </div>
         </div>
     </div>
     <!-- Footer -->

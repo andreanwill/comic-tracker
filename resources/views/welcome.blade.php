@@ -37,8 +37,19 @@
                             <a class="nav-link" href="/comics">List Komik</a>
                         </li>
                         @auth
+                        <li class="nav-item d-flex align-items-center">
+                            <span class="nav-link disabled">{{ auth()->user()->name }}</span>
+                        </li>
+                        @if(auth()->user()->role === 'admin')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
+                            <a class="nav-link" href="/admin">Dashboard Admin</a>
+                        </li>
+                        @endif
+                        <li class="nav-item">
+                            <form method="POST" action="/logout" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link nav-link" style="display:inline;cursor:pointer;">Logout</button>
+                            </form>
                         </li>
                         @else
                         <li class="nav-item">

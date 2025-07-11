@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
             ComicSeeder::class,
             UserSeeder::class,
         ]);
+
+        $this->call(JikanComicSeeder::class);
     }
 }

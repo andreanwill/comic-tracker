@@ -26,7 +26,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // Redirect berdasarkan role
-            return Auth::user()->role === 'admin' ? redirect('/admin') : redirect('/dashboard');
+            return Auth::user()->role === 'admin' ? redirect('/admin') : redirect('/');
         }
 
         return back()->withErrors(['email' => 'Email atau password salah']);
