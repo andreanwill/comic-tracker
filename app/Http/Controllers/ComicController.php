@@ -6,20 +6,19 @@ use App\Models\Comic;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class ComicController extends Controller
 {
     public function index()
     {
         $comics = Comic::with('genres')->get();
-        return view('admin.comics.index', compact('comics'));
+        return view('admin.komik.index', compact('comics'));
     }
 
     public function create()
     {
         $genres = Genre::all();
-        return view('admin.comics.create', compact('genres'));
+        return view('admin.komik.create', compact('genres'));
     }
 
     public function store(Request $request)
@@ -43,8 +42,6 @@ class ComicController extends Controller
 
         if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
-            // Debug: Log the stored path
-            Log::info('Cover image stored at: ' . $data['cover_image']);
         }
 
         $comic = Comic::create($data);
@@ -59,7 +56,7 @@ class ComicController extends Controller
     public function edit(Comic $comic)
     {
         $genres = Genre::all();
-        return view('admin.comics.edit', compact('comic', 'genres'));
+        return view('admin.komik.edit', compact('comic', 'genres'));
     }
 
     public function update(Request $request, Comic $comic)
@@ -87,8 +84,6 @@ class ComicController extends Controller
                 Storage::disk('public')->delete($comic->cover_image);
             }
             $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
-            // Debug: Log the stored path
-            Log::info('Cover image updated at: ' . $data['cover_image']);
         }
 
         $comic->update($data);

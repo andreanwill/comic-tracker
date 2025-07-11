@@ -86,7 +86,6 @@
                                         @if($comic->cover_image)
                                             <img id="preview" src="{{ asset('storage/'.$comic->cover_image) }}" 
                                                  alt="Preview" class="img-fluid rounded mb-2" style="max-height: 200px; width: 100%; object-fit: cover;">
-                                            <small class="text-muted d-block mb-2">Path: {{ $comic->cover_image }}</small>
                                         @endif
                                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeImage()">Hapus Gambar</button>
                                     </div>

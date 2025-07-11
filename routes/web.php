@@ -19,10 +19,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/comics', [\App\Http\Controllers\ComicController::class, 'publicIndex'])->name('comics.index');
 Route::get('/komik/{comic}', [\App\Http\Controllers\ComicController::class, 'show'])->name('comics.show');
 
-Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
-    });
+    })->name('dashboard');
     // CRUD Komik
     Route::resource('comics', \App\Http\Controllers\ComicController::class);
 

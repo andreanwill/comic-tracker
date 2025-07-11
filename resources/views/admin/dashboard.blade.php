@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Manajemen Komik</h5>
                     <p class="card-text">Tambah, edit, atau hapus data komik yang tersedia di sistem.</p>
-                    <a href="/admin/comics" class="btn btn-primary">Kelola Komik</a>
+                    <a href="{{ route('admin.comics.index') }}" class="btn btn-primary">Kelola Komik</a>
                 </div>
             </div>
         </div>

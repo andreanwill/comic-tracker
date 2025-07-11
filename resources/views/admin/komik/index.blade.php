@@ -3,13 +3,22 @@
 @section('content')
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-semibold text-primary">Daftar Komik</h2>
-        <a href="/admin/comics/create" class="btn btn-success"><i class="bi bi-plus-lg"></i> Tambah Komik</a>
+        <h2 class="fw-semibold text-primary mb-0">Daftar Komik</h2>
+        <a href="{{ route('admin.comics.create') }}" class="btn btn-success"><i class="bi bi-plus-lg"></i> Tambah Komik</a>
     </div>
-    
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
@@ -32,7 +41,6 @@
                     <td style="width: 80px;">
                         @if($comic->cover_image)
                             <img src="{{ asset('storage/'.$comic->cover_image) }}" alt="{{ $comic->title }}" class="img-fluid rounded" style="height: 60px; width: 60px; object-fit: cover;">
-                            <small class="text-muted d-block">{{ $comic->cover_image }}</small>
                         @else
                             <span class="text-secondary fs-2">📚</span>
                         @endif
@@ -47,8 +55,8 @@
                         @endforeach
                     </td>
                     <td class="text-center">
-                        <a href="/admin/comics/{{ $comic->id }}/edit" class="btn btn-warning btn-sm me-1"><i class="bi bi-pencil"></i> Edit</a>
-                        <form method="POST" action="/admin/comics/{{ $comic->id }}" class="d-inline">
+                        <a href="{{ route('admin.comics.edit', $comic->id) }}" class="btn btn-warning btn-sm me-1"><i class="bi bi-pencil"></i> Edit</a>
+                        <form method="POST" action="{{ route('admin.comics.destroy', $comic->id) }}" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')"><i class="bi bi-trash"></i> Hapus</button>
                         </form>

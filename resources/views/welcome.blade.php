@@ -106,6 +106,7 @@
                                     @endforeach
                                 </div>
                                 <p class="card-text text-muted small mb-2" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ $comic->description }}</p>
+                                <a href="{{ route('comics.show', $comic->id) }}" class="btn btn-outline-primary btn-sm mt-auto">Lihat Detail</a>
                             </div>
                         </div>
                     </div>

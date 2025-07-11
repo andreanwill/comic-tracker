@@ -17,7 +17,7 @@
             <a class="navbar-brand fw-bold" href="/admin">Admin Dashboard</a>
             <div class="navbar-nav me-auto">
                 <a class="nav-link" href="/"><i class="bi bi-house"></i> Halaman Utama</a>
-                <a class="nav-link" href="/admin/comics"><i class="bi bi-book"></i> Kelola Komik</a>
+                <a class="nav-link" href="{{ route('admin.comics.index') }}"><i class="bi bi-book"></i> Kelola Komik</a>
                 <a class="nav-link" href="/admin/genres"><i class="bi bi-tags"></i> Kelola Genre</a>
             </div>
             <div class="d-flex align-items-center">
