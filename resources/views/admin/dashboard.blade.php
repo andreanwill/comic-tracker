@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="row g-4">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body">
                     <h5 class="card-title">Manajemen Komik</h5>
@@ -42,12 +42,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body">
                     <h5 class="card-title">Manajemen Genre</h5>
                     <p class="card-text">Kelola daftar genre komik yang tersedia.</p>
-                    <a href="/admin/genres" class="btn btn-success">Kelola Genre</a>
+                    <a href="{{ route('admin.genres.index') }}" class="btn btn-success">Kelola Genre</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Manajemen Jumbotron</h5>
+                    <p class="card-text">Kelola gambar carousel jumbotron di halaman utama.</p>
+                    <a href="{{ route('admin.jumbotron.index') }}" class="btn btn-info text-white">Kelola Jumbotron</a>
                 </div>
             </div>
         </div>
