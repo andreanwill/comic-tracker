@@ -59,7 +59,11 @@
                     <div class="row g-4 align-items-center">
                         <div class="col-md-5 text-center">
                             @if($comic->cover_image)
-                                <img src="{{ asset('storage/'.$comic->cover_image) }}" class="cover-img mb-3 mb-md-0" alt="{{ $comic->title }}">
+                                @if(Str::startsWith($comic->cover_image, ['http://', 'https://']))
+                                    <img src="{{ $comic->cover_image }}" class="card-img-top" alt="{{ $comic->title }}" style="object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('storage/' . $comic->cover_image) }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
+                                @endif
                             @else
                                 <div class="d-flex align-items-center justify-content-center bg-light cover-img mb-3 mb-md-0" style="height: 320px;">
                                     <span class="text-secondary display-3">📚</span>
