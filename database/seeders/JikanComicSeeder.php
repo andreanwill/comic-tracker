@@ -15,7 +15,7 @@ class JikanComicSeeder extends Seeder
     public function run(): void
     {
         // Fetch top manga from Jikan API
-        $response = Http::get('https://api.jikan.moe/v4/top/manga?limit=10');
+        $response = Http::get('https://api.jikan.moe/v4/top/manga?');
         $mangaList = $response->json('data') ?? [];
 
         foreach ($mangaList as $manga) {
@@ -24,6 +24,7 @@ class JikanComicSeeder extends Seeder
             $cover = $manga['images']['jpg']['large_image_url'] ?? null;
             $genres = $manga['genres'] ?? [];
 
+            // Skip if title or cover is not available
             if (!$title || !$cover) continue;
 
             // Insert comic
@@ -41,6 +42,8 @@ class JikanComicSeeder extends Seeder
                 ]);
                 $genreIds[] = $genre->id;
             }
+
+            // Attach genres to the comic
             if ($genreIds) {
                 $comic->genres()->attach($genreIds);
             }
