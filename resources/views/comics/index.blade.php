@@ -1,3 +1,6 @@
+@extends('layouts.template')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,45 +14,6 @@
     </style>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/">Comic Tracker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/comics">List Komik</a>
-                    </li>
-                    @auth
-                    <li class="nav-item d-flex align-items-center">
-                        <span class="nav-link disabled">{{ auth()->user()->name }}</span>
-                    </li>
-                    @if(auth()->user()->role === 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin">Dashboard Admin</a>
-                    </li>
-                    @endif
-                    <li class="nav-item">
-                        <form method="POST" action="/logout" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link" style="display:inline;cursor:pointer;">Logout</button>
-                        </form>
-                    </li>
-                    @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register</a>
-                    </li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
-    </nav>
     <div class="container pb-5 flex-grow-1">
         <h2 class="mb-4 text-center fw-semibold text-primary">List Komik</h2>
         <div class="row g-4">
@@ -84,12 +48,8 @@
             @endforelse
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="footer py-4 mt-auto">
-        <div class="container text-center">
-            <small>&copy; {{ date('Y') }} Comic Tracker. All rights reserved.</small>
-        </div>
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    </body>
 </html> 
+
+@endsection

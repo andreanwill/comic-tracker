@@ -1,3 +1,6 @@
+@extends('layouts.template')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,34 +14,6 @@
     </style>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/">Comic Tracker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/comics">List Komik</a>
-                    </li>
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
-                    </li>
-                    @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('register') }}">Register</a>
-                    </li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
-    </nav>
     <div class="container d-flex align-items-center justify-content-center flex-grow-1">
         <div class="col-12 col-sm-8 col-md-5 col-lg-4">
             <div class="card shadow-sm">
@@ -77,12 +52,7 @@
             </div>
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="footer py-4 mt-auto">
-        <div class="container text-center">
-            <small>&copy; {{ date('Y') }} Comic Tracker. All rights reserved.</small>
-        </div>
-    </footer>
 </body>
 </html>
 
+@endsection
