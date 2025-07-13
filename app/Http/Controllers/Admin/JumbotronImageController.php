@@ -52,6 +52,6 @@ class JumbotronImageController extends Controller
         foreach ($request->orders as $id => $order) {
             JumbotronImage::where('id', $id)->update(['order' => $order]);
         }
-        return response()->json(['success' => true]);
+        return redirect()->route('admin.jumbotron.index')->with('success', 'Gambar berhasil di urutkan');
     }
 }
