@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JumbotronImage;
 
 Route::get('/', function () {
-    $comics = \App\Models\Comic::with('genres')->limit(4)->get();
+    $comics = \App\Models\Comic::with('genres')->orderBy('created_at', 'desc')->limit(4)->get();
     $jumbotronImages = Controller::getJumbotronImages();
     return view('welcome', compact('comics', 'jumbotronImages'));
 });

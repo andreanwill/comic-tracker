@@ -21,11 +21,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            GenreSeeder::class,
-            ComicSeeder::class,
+            //GenreSeeder::class,
+            //ComicSeeder::class,
             UserSeeder::class,
+            JikanComicSeeder::class,
         ]);
-
-        $this->call(JikanComicSeeder::class);
     }
 }
