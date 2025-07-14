@@ -40,7 +40,11 @@
                     <td>{{ $index + 1 }}</td>
                     <td style="width: 80px;">
                         @if($comic->cover_image)
-                            <img src="{{ asset('storage/'.$comic->cover_image) }}" alt="{{ $comic->title }}" class="img-fluid rounded" style="height: 60px; width: 60px; object-fit: cover;">
+                            @if(Str::startsWith($comic->cover_image, ['http://', 'https://']))
+                                <img src="{{ $comic->cover_image }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
+                            @else
+                                <img src="{{ asset('storage/' . $comic->cover_image) }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
+                            @endif
                         @else
                             <span class="text-secondary fs-2">📚</span>
                         @endif
@@ -55,12 +59,16 @@
                         @endforeach
                     </td>
                     <td class="text-center">
-                        <a href="{{ route('admin.comics.edit', $comic->id) }}" class="btn btn-warning btn-sm me-1"><i class="bi bi-pencil"></i> Edit</a>
-                        <form method="POST" action="{{ route('admin.comics.destroy', $comic->id) }}" class="d-inline">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')"><i class="bi bi-trash"></i> Hapus</button>
-                        </form>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{{ route('admin.comics.edit', $comic->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</a>
+                            <form method="POST" action="{{ route('admin.comics.destroy', $comic->id) }}">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')"><i class="bi bi-trash"></i> Hapus</button>
+                            </form>
+                        </div>
                     </td>
+
+
                 </tr>
                 @empty
                 <tr>

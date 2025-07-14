@@ -84,8 +84,11 @@
                                 <div class="card-body text-center">
                                     <div id="imagePreview" class="{{ $comic->cover_image ? '' : 'd-none' }}">
                                         @if($comic->cover_image)
-                                            <img id="preview" src="{{ asset('storage/'.$comic->cover_image) }}" 
-                                                 alt="Preview" class="img-fluid rounded mb-2" style="max-height: 200px; width: 100%; object-fit: cover;">
+                                            @if(Str::startsWith($comic->cover_image, ['http://', 'https://']))
+                                                <img src="{{ $comic->cover_image }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ asset('storage/' . $comic->cover_image) }}" class="card-img-top" alt="{{ $comic->title }}" style="height: 260px; object-fit: cover;">
+                                            @endif
                                         @endif
                                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeImage()">Hapus Gambar</button>
                                     </div>
