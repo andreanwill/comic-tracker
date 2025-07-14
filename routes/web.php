@@ -22,6 +22,14 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/comics', [\App\Http\Controllers\ComicController::class, 'publicIndex'])->name('comics.index');
 Route::get('/komik/{comic}', [\App\Http\Controllers\ComicController::class, 'show'])->name('comics.show');
 
+// Read Status Routes (requires authentication)
+Route::middleware('auth')->group(function () {
+    Route::get('/baca', [\App\Http\Controllers\ReadStatusController::class, 'index'])->name('read-status.index');
+    Route::post('/komik/{comic}/baca', [\App\Http\Controllers\ReadStatusController::class, 'addToReadList'])->name('read-status.add');
+    Route::put('/baca/{readStatus}/status', [\App\Http\Controllers\ReadStatusController::class, 'updateStatus'])->name('read-status.update');
+    Route::delete('/baca/{readStatus}', [\App\Http\Controllers\ReadStatusController::class, 'removeFromReadList'])->name('read-status.remove');
+});
+
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');

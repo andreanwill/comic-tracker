@@ -5,6 +5,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Comic Tracker</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <style>
+            html, body {
+                height: 100%;  /* Pastikan body dan html memiliki tinggi penuh */
+                margin: 0;     /* Hilangkan margin default */
+            }
+
+            body {
+                display: flex;
+                flex-direction: column; /* Agar elemen-elemen di dalam body disusun secara vertikal */
+            }
+
+            .main-content {
+                flex: 1; /* Mengambil sisa ruang yang ada agar footer tetap di bawah */
+            }
+
+            .footer {
+                margin-top: auto; /* Mengatur margin atas agar footer berada di bawah */
+            }
+        </style>
 
         <!-- Bootstrap 5 CDN -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,6 +48,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/comics">List Komik</a>
                         </li>
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('read-status.index') }}">Daftar Baca</a>
+                        </li>
+                        @endauth
                         @auth
                         <li class="nav-item d-flex align-items-center">
                             <span class="nav-link disabled">{{ auth()->user()->name }}</span>

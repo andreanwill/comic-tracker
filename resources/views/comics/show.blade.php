@@ -45,7 +45,30 @@
                             </div>
                             <h6 class="text-secondary mb-2">Deskripsi</h6>
                             <p class="card-text text-muted mb-3" style="white-space: pre-line;">{{ $comic->description ?? '-' }}</p>
-                            <a href="{{ route('comics.show', $comic->id) }}" class="btn btn-outline-primary btn-sm mt-auto">Lihat Detail</a>
+                            @auth
+                                @php
+                                    $readStatus = \App\Models\ReadStatus::where('user_id', auth()->id())
+                                        ->where('comic_id', $comic->id)
+                                        ->first();
+                                @endphp
+                                @if($readStatus)
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-success">Sudah di daftar baca</span>
+                                        <form method="POST" action="{{ route('read-status.remove', $readStatus->id) }}" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">Hapus dari Daftar</button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <form method="POST" action="{{ route('read-status.add', $comic->id) }}" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary btn-sm">Baca</button>
+                                    </form>
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm">Login untuk Menambah ke Daftar Baca</a>
+                            @endauth
                         </div>
                     </div>
                 </div>

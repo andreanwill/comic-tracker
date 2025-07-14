@@ -7,8 +7,42 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
-        .stat-card { border-radius: 1rem; }
-        .admin-avatar { width: 48px; height: 48px; border-radius: 50%; background: #0d6efd; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .stat-card { 
+            border-radius: 1rem; 
+        }
+        .admin-avatar { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            background: #0d6efd; 
+            color: #fff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem; 
+        }
+
+        /* Pastikan body mengambil seluruh tinggi layar */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Atur body untuk menggunakan Flexbox */
+        body {
+            display: flex;
+            flex-direction: column; /* Menyusun elemen secara vertikal */
+        }
+
+        /* Konten utama agar bisa mengisi sisa ruang */
+        .content {
+            flex-grow: 1;
+        }
+
+        /* Footer dengan margin top otomatis agar tetap di bawah */
+        .footer {
+            margin-top: auto; /* Menjaga footer tetap di bawah */
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -31,13 +65,16 @@
         </div>
     </nav>
     
-    @yield('content')
+    <div class="content">
+        @yield('content')
+    </div>
     
     <footer class="footer py-4 mt-5 bg-white border-top">
         <div class="container text-center">
             <small>&copy; {{ date('Y') }} Comic Tracker Admin. All rights reserved.</small>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>
